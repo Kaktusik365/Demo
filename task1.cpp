@@ -1,32 +1,29 @@
-﻿#include <iostream>
+#include <iostream>
 #include <cmath>
 using namespace std;
 
-/*
+/**
  * @brief Функция для вычисления значения переменной a по заданным константам.
  * @param x значение константы .
  * @param y значение константы .
  * @param z значение константы .
  * @return Результат вычисления переменной a.
 */
-
 double calculateA(const double x, const double y, double z)
-{
-    return pow(sin(pow(x, 2) + z), 3) - sqrt(x / y);
-}
 
-/*
+
+/**
  * @brief Функция для вычисления значения переменной b по заданным константам.
  * @param x значение константы .
  * @param z значение константы .
  * @return Результат вычисления переменной b.
 */
-
 double calculateB(const double x, const double z)
-{
-    return pow(x, 2) / z + pow(cos(x), 3);
-}
 
+/**
+ * @brief главная функция программы
+ * @return возвращает 0 правильно, в противном случае - 0
+ */
 int main()
 {
     const double x = 0.2;
@@ -40,4 +37,15 @@ int main()
     cout << "b = " << calculateB(x, z) << endl;
 
     return 0;
+}
+
+
+double calculateA(const double x, const double y, double z)
+{
+    return pow(sin(pow(x, 2) + z), 3) - sqrt(x / y);
+}
+
+double calculateB(const double x, const double z)
+{
+    return pow(x, 2) / z + pow(cos(x), 3);
 }
