@@ -5,12 +5,14 @@ using namespace std;
 
 /**
  * @brief  получает значения байтов
+ * @param bites - введённое колиичество байтов, которые надо перевести
  * @return переводит байты в мегабайты
  */
 double getMegaBite(double bites);
 
 /**
  * @brief  получает значения байтов
+ * @param bites - введённое колиичество байтов, которые надо перевести
  * @return переводит байты в гигабайты
  */
 double getGigaBite(double bites);
