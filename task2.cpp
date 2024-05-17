@@ -8,19 +8,19 @@ using namespace std;
  * @param bites - введённое колиичество байтов, которые надо перевести
  * @return переводит байты в мегабайты
  */
-double getMegaBite(double bites);
+double getMegaBite(const double bites);
 
 /**
  * @brief  получает значения байтов
  * @param bites - введённое колиичество байтов, которые надо перевести
  * @return переводит байты в гигабайты
  */
-double getGigaBite(double bites);
+double getGigaBite(const double bites);
 
 /**
  * @brief считывает введённое значение с клавиатуры, чтобы не было отрицательных
  */
-void checkvalue(double value);
+void checkvalue(const double value);
 
 /**
  * @brief Считывает значения с клавиатуры с проверкой ввода
@@ -58,17 +58,17 @@ double getValue()
 }
 
 
-double getMegaBite(double bites)
+double getMegaBite(const double bites)
 {
     return bites / 1024;
 }
 
-double getGigaBite(double bites)
+double getGigaBite(const double bites)
 {
     return bites / pow(1024,2);
 }
 
-void checkvalue(double value)
+void checkvalue(const double value)
 {
     if (value < 0)
     {
