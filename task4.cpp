@@ -87,10 +87,6 @@ void calculateAndPrintValues(const double startX, const double endX, const doubl
         {
             cout << "Ошибка: Тангенс не существует для x = " << x << endl;
         }
-
-        {
-            cout << "Решение невозможно для x = " << x << endl;
-        }
         else
         {
             double y = calculateFunction(x);
