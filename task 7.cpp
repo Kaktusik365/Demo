@@ -17,7 +17,7 @@ double getValue();
  * @param max_cols Максимальное количество столбцов.
  * @return true, если оба значения положительные; false в противном случае.
  */
-bool checkPositiveValues(int max_rows, int max_cols);
+bool checkPositiveValues(const int max_rows, const int max_cols);
 
 /**
  *@brief Заполняет двумерный массив случайными значениями.
@@ -81,7 +81,7 @@ void deleteArray(int** arr, const int rows);
 *brief Точка входа в программу
 *return 0
 */
-int main() 
+int main()
 {
     setlocale(LC_ALL, "Russian");
     srand(time(0));
@@ -111,20 +111,21 @@ int main()
 
     deleteArray(secondArr, max_rows);
 
-    int newcols = max_cols;
-    int** arr3 = copyArray(array, max_rows, newcols);
-    insertFirstRowAfterMaxAbsColumn(arr3, max_rows, newcols);
+    int newrows = max_rows;
+    int** arr3 = copyArray(array, max_cols, max_rows);
+    insertFirstRowAfterMaxAbsColumn(arr3, max_rows, newrows);
 
     cout << "\nВставить после всех строк, содержащих максимальный по модулю элемент, первую строку:" << endl;
-    printArray(arr3, max_rows, newcols);
+    printArray(arr3, max_cols, newrows);
 
-    deleteArray(arr3, max_rows);
-    deleteArray(array, max_rows);
+    deleteArray(arr3, newrows);
+    deleteArray(array, newrows);
 
     return 0;
 }
 
-void fillArrayRandomly(int** array, int rows, int cols) {
+void fillArrayRandomly(int** array, int rows, int cols)
+{
     for (size_t i = 0; i < rows; ++i) {
         for (size_t j = 0; j < cols; ++j) {
             array[i][j] = rand() - RAND_MAX / 2;
@@ -195,24 +196,30 @@ double getValue() {
 
 int** getNewArray(const int max_rows, const int max_cols) {
     int** array = new int* [max_rows];
-    for (size_t i = 0; i < max_rows; ++i) {
+    for (size_t i = 0; i < max_rows; ++i)
+    {
         array[i] = new int[max_cols];
     }
     return array;
 }
 
-int** copyArray(int** arr, const int rows, const int columns) {
+int** copyArray(int** arr, const int rows, const int columns)
+{
     int** resultArray = getNewArray(rows, columns);
-    for (size_t i = 0; i < rows; i++) {
-        for (size_t j = 0; j < columns; j++) {
+    for (size_t i = 0; i < rows; i++)
+    {
+        for (size_t j = 0; j < columns; j++)
+        {
             resultArray[i][j] = arr[i][j];
         }
     }
     return resultArray;
 }
 
-void deleteArray(int** arr, const int rows) {
-    for (size_t i = 0; i < rows; ++i) {
+void deleteArray(int** arr, const int rows)
+{
+    for (size_t i = 0; i < rows; ++i)
+    {
         delete[] arr[i];
     }
     delete[] arr;
@@ -220,10 +227,12 @@ void deleteArray(int** arr, const int rows) {
 
 bool checkPositiveValues(int max_rows, int max_cols)
 {
-    if (max_rows > 0 && max_cols > 0) {
+    if (max_rows > 0 && max_cols > 0)
+    {
         return true; // Оба значения положительные
     }
-    else {
+    else
+    {
         cout << "Ошибка: Количество строк и столбцов должно быть положительным числом." << endl;
         return false; // Хотя бы одно значение не положительное
     }
