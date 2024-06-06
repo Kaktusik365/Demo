@@ -87,7 +87,7 @@ void calculateAndPrintValues(const double startX, const double endX, const doubl
         {
             cout << "Ошибка: Тангенс не существует для x = " << x << endl;
         }
-        else if (fabs(tan(x) - 1.0 / 3.0 * pow(tan(x), 3) + 1.0 / 5.0 * pow(tan(x), 5) - 1.0 / 3) < numeric_limits<double>::epsilon())
+
         {
             cout << "Решение невозможно для x = " << x << endl;
         }
