@@ -1,5 +1,4 @@
-﻿
-#include <iostream>
+﻿#include <iostream>
 #include <ctime>
 #include <cstdlib>
 using namespace std;
@@ -38,7 +37,7 @@ int getNumber();
  * @param arr - массив
  * @param n - размер массива
  */
-void printArray(const int* arr, const int n);
+void printArray(const int* arr, const int n)const;
 
 /**
  * @brief заполнение массива автоматически случайнвми числами в заданном диапазоне
@@ -61,7 +60,7 @@ void checkRange(const int min, const int max);
  * @param arr  Массив целых чисел, в котором будет произведена замена
  * @param n Размер массива
  */
-int replaceMinWithAverage(int arr[], const int n);
+void replaceMinWithAverage(const int arr[], const int n);
 
 /**
  * @brief проверяет, содержит ли массив две пары соседних элементов с одинаковыми знаками.
@@ -196,7 +195,7 @@ void checkRange(const int min, const int max)
     }
 }
 
-int replaceMinWithAverage(int arr[], const int n)
+void replaceMinWithAverage(const int arr[], const int n)
 {
     int minIndex = 0;
 
@@ -216,13 +215,6 @@ int replaceMinWithAverage(int arr[], const int n)
     }
 
     arr[minIndex] = sum / n;
-
-    cout << "Массив после замены минимального значения на среднее: ";
-    for (size_t i = 0; i < n; ++i)
-    {
-        cout << arr[i] << " ";
-    }
-    cout << endl;
 }
 
 void printIndicesGreaterThanPrevious(const int arr[], const int n)
@@ -238,9 +230,10 @@ void printIndicesGreaterThanPrevious(const int arr[], const int n)
 
 bool hasTwoPairsWithSameSign(const int arr[], const int n)
 {
-    for (size_t i = 0; i < n - 3; ++i)
+    for (size_ti = 0; i < n - 3; ++i)
     {
-        if ((arr[i] * arr[i + 1] > 0 && arr[i + 2] * arr[i + 3] > 0))
+        if ((arr[i] > 0 && arr[i + 1] > 0 && arr[i + 2] > 0 && arr[i + 3] > 0) ||
+            (arr[i] < 0 && arr[i + 1] < 0 && arr[i + 2] < 0 && arr[i + 3] < 0))
         {
             return true;
         }
