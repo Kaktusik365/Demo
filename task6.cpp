@@ -1,3 +1,4 @@
+﻿
 #include <iostream>
 #include <ctime>
 #include <cstdlib>
@@ -37,7 +38,7 @@ int getNumber();
  * @param arr - массив
  * @param n - размер массива
  */
-void printArray(const int* arr, const int n)const;
+void printArray(const int* arr, const int n);
 
 /**
  * @brief заполнение массива автоматически случайнвми числами в заданном диапазоне
@@ -60,7 +61,7 @@ void checkRange(const int min, const int max);
  * @param arr  Массив целых чисел, в котором будет произведена замена
  * @param n Размер массива
  */
-void replaceMinWithAverage(const int arr[], const int n);
+int replaceMinWithAverage(int arr[], const int n);
 
 /**
  * @brief проверяет, содержит ли массив две пары соседних элементов с одинаковыми знаками.
@@ -94,7 +95,6 @@ int main()
 {
     setlocale(LC_ALL, "Russian");
     int n = getSize();
-    int n = getValue();
     int* arr = new int[n];
 
     cout << "Введите минимальное и максимальное значение диапазона: ";
@@ -125,8 +125,8 @@ int main()
     printArray(arr, n);
 
     replaceMinWithAverage(arr, n);
-    printreplaceMinWithAverage(arr, n);
-    
+    printArray(arr, n);
+
     printIndicesGreaterThanPrevious(arr, n);
 
     if (hasTwoPairsWithSameSign(arr, n))
@@ -158,17 +158,6 @@ size_t getSize()
     cin >> n;
     checkN(n);
     return (size_t)n;
-}
-
-int getValue()
-{
-    int n; 
-        if (!(cin>>n))
-    {
-        cout<<"error"<<endl;
-        abort();
-    }
-    return n;
 }
 
 int getNumber()
@@ -209,7 +198,7 @@ void checkRange(const int min, const int max)
     }
 }
 
-void replaceMinWithAverage(const int arr[], const int n)
+int replaceMinWithAverage(int arr[], const int n)
 {
     int minIndex = 0;
 
@@ -229,6 +218,13 @@ void replaceMinWithAverage(const int arr[], const int n)
     }
 
     arr[minIndex] = sum / n;
+
+    cout << "Массив после замены минимального значения на среднее: ";
+    for (size_t i = 0; i < n; ++i)
+    {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
 }
 
 void printIndicesGreaterThanPrevious(const int arr[], const int n)
@@ -244,9 +240,9 @@ void printIndicesGreaterThanPrevious(const int arr[], const int n)
 
 bool hasTwoPairsWithSameSign(const int arr[], const int n)
 {
-    for (size_ti = 0; i < n - 3; ++i)
+    for (size_t i = 0; i < n - 3; ++i)
     {
-        if ((arr[i] * arr[i + 1] > 0 && arr[i + 2] *arr[i + 3] > 0))
+        if ((arr[i] * arr[i + 1] > 0 && arr[i + 2] * arr[i + 3] > 0))
         {
             return true;
         }
