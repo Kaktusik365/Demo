@@ -110,10 +110,10 @@ int main()
     printArray(secondArr, max_rows, max_cols);
 
     deleteArray(secondArr, max_rows);
-
+    
     int newrows = max_rows;
-    int** arr3 = copyArray(array, max_cols, max_rows);
-    insertFirstRowAfterMaxAbsColumn(arr3, max_rows, newrows);
+    int** arr3 = copyArray(array, max_rows, max_cols);
+    insertFirstRowAfterMaxAbsColumn(arr3, newrows, max_cols);
 
     cout << "\nВставить после всех строк, содержащих максимальный по модулю элемент, первую строку:" << endl;
     printArray(arr3, max_cols, newrows);
