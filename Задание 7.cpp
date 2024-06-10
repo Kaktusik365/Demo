@@ -1,5 +1,7 @@
-﻿﻿ #include <cstdlib>
+﻿#include <cstdlib>
 #include <iostream>
+#include <cmath>
+#include <ctime>
 using namespace std;
 
 /**
@@ -36,17 +38,16 @@ void replaceMaxWithZero(int** array, const int rows, const int cols);
 
 /**
  * @brief Вставляет первую строку после строки с максимальным по модулю элементом в каждом столбце двумерного массива.
- * @param arr3 Указатель на двумерный массив новый.
- * @param array Указатель на двумерный массив шаблонный.
- * @param rows Количество строк в массиве в новом массиве.
+ *
+ * @param arr3 Указатель на двумерный массив.
  * @param rows Количество строк в массиве.
  * @param cols Количество столбцов в массиве.
  */
-void insertFirstRowAfterMaxAbsColumn(int** arr3, int** array, const int new_rows, const int rows, const int cols);
+void insertFirstRowAfterMaxAbsColumn(int** arr3, const int max_rows, const int cols);
 
 /**
-*@brief Выводит двумерный массив на экран.
-*@param  array Указатель на двумерный массив
+*brief Выводит двумерный массив на экран.
+*@param  array Указатель на двумерный массив, в котором нужно заменить нулевые элементы.
 *@param rows Количество строк в массиве.
 *@param cols Количество столбцов в массиве
 */
@@ -77,8 +78,8 @@ int** copyArray(int** arr, const int rows, const int columns);
 void deleteArray(int** arr, const int rows);
 
 /**
-*@brief Точка входа в программу
-*@return 0
+*brief Точка входа в программу
+*return 0
 */
 int main()
 {
@@ -110,82 +111,83 @@ int main()
 
     deleteArray(secondArr, max_rows);
 
+    int newrows = max_rows;
+    int** arr3 = copyArray(array, max_cols, max_rows);
+    insertFirstRowAfterMaxAbsColumn(arr3, max_rows, newrows);
 
-    cout << "\nВставляет первую строку после строки с максимальным по модулю элементом в каждом столбце двумерного массива:" << endl;
-    int newrows = max_rows + 1;
-    int** arr3 = getNewArray(newrows, max_cols);
-    insertFirstRowAfterMaxAbsColumn(arr3, array, newrows, max_rows, max_cols);
-
-    printArray(arr3, newrows, max_cols);
+    cout << "\nВставить после всех строк, содержащих максимальный по модулю элемент, первую строку:" << endl;
+    printArray(arr3, max_cols, newrows);
 
     deleteArray(arr3, newrows);
-    deleteArray(array, max_rows);
+    deleteArray(array, newrows);
 
     return 0;
 }
 
-void fillArrayRandomly(int** array, const int rows, const int cols)
+void fillArrayRandomly(int** array, int rows, int cols)
 {
     for (size_t i = 0; i < rows; ++i) {
         for (size_t j = 0; j < cols; ++j) {
-            array[i][j] = rand() % (100 - -100 + 1) + -100;
+            array[i][j] = rand() - RAND_MAX / 2;
         }
     }
 }
 
-void replaceMaxWithZero(int** array, const int rows, const int cols) {
+void replaceMaxWithZero(int** array, const int rows, const int cols) 
+{
+    for (size_t j = 0; j < cols; ++j) 
+    {
+        int maxAbsValue = abs(array[0][j]);
+        // находим максимолаьное
+        for (size_t i = 1; i < rows; ++i) 
+        {
+            if (abs(array[i][j]) > maxAbsValue) 
+            {
+                maxAbsValue = abs(array[i][j]);
+            }
+        }
+        // заменяем нулями
+        for (size_t i = 0; i < rows; ++i) 
+        {
+            if (abs(array[i][j]) == maxAbsValue) 
+            {
+                array[i][j] = 0;
+            }
+        }
+    }
+}
+
+void insertFirstRowAfterMaxAbsColumn(int** arr3, int rows, int cols) {
     for (size_t j = 0; j < cols; ++j) {
         int maxAbsValue = 0;
-        for (size_t i = 1; i < rows; ++i) {
-            if (abs(array[i][j]) > abs(array[maxAbsValue][j])) {
+        for (size_t i = 0; i < rows; ++i) {
+            if (abs(arr3[i][j]) > abs(arr3[maxAbsValue][j])) {
                 maxAbsValue = i;
             }
         }
-        array[maxAbsValue][j] = 0;
+        if (maxAbsValue != 0) {
+            int* tempRow = new int[cols]; // Создаем временный массив для хранения первой строки
+            for (size_t l = 0; l < cols; ++l) {
+                tempRow[l] = arr3[0][l]; // Сохраняем первую строку во временный массив
+            }
+
+            for (size_t k = rows; k > maxAbsValue + 1; --k) {
+                for (size_t l = 0; l < cols; ++l) {
+                    arr3[k][l] = arr3[k - 1][l]; // Сдвигаем строки вниз
+                }
+            }
+
+            for (size_t l = 0; l < cols; ++l) {
+                arr3[maxAbsValue + 1][l] = tempRow[l]; // Вставляем первую строку после строки с максимальным по модулю элементом
+            }
+
+            delete[] tempRow; // Освобождаем память, выделенную для временного массива
+        }
     }
 }
 
-void insertFirstRowAfterMaxAbsColumn(int** arr3, int** array, const int new_rows, const int rows, const int cols) {
-    int i_max_elem = 0;
-    int j_max_elem = 0;
-    for (size_t i = 0; i < rows; i++) {
-        for (size_t j = 0; j < cols; j++) {
-            if (abs(array[i_max_elem][j_max_elem]) < abs(array[i][j])) {
-                i_max_elem = i;
-                j_max_elem = j;
-            }
-        }
-    }
-    // находим индексы максимального элемента
-    cout << "MAX=" << array[i_max_elem][j_max_elem] << endl;
-    int* temprow = new int[cols]();
-    for (size_t j = 0; j < cols; j++) {
-        temprow[j] = array[0][j];
-    }
-    // "запоминаем" нашу первую строку
-    for (size_t i = 0, i_original = 0; i < new_rows; i++, i_original++) {
-        if (i_original == i_max_elem) {
-            // если нашли строку совпадающуюю по индексу с индексом строки макс элемента копируем 
-            // сначала исходную строку массива, потом нашу "первую" строку
-            for (size_t j = 0; j < cols; j++) {
-                arr3[i][j] = array[i_original][j];
-            }
-            i++;
-            for (size_t j = 0; j < cols; j++) {
-                arr3[i][j] = temprow[j];
-            }
-        }
-        else {
-            // обычное копирование элементов
-            for (size_t j = 0; j < cols; j++) {
-                arr3[i][j] = array[i_original][j];
-            }
-        }
-    }
-    delete[] temprow;
-}
 
-void printArray(int** array, const int rows, const int cols) {
+void printArray(int** array, int rows, int cols) {
     for (size_t i = 0; i < rows; ++i) {
         for (size_t j = 0; j < cols; ++j) {
             cout << array[i][j] << " ";
@@ -235,7 +237,7 @@ void deleteArray(int** arr, const int rows)
     delete[] arr;
 }
 
-bool checkPositiveValues(const int max_rows, const int max_cols)
+bool checkPositiveValues(int max_rows, int max_cols)
 {
     if (max_rows > 0 && max_cols > 0)
     {
