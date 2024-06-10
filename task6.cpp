@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include <ctime>
 #include <cstdlib>
 using namespace std;
@@ -94,6 +94,7 @@ int main()
 {
     setlocale(LC_ALL, "Russian");
     int n = getSize();
+    int n = getValue();
     int* arr = new int[n];
 
     cout << "Введите минимальное и максимальное значение диапазона: ";
@@ -124,6 +125,8 @@ int main()
     printArray(arr, n);
 
     replaceMinWithAverage(arr, n);
+    printreplaceMinWithAverage(arr, n);
+    
     printIndicesGreaterThanPrevious(arr, n);
 
     if (hasTwoPairsWithSameSign(arr, n))
@@ -155,6 +158,17 @@ size_t getSize()
     cin >> n;
     checkN(n);
     return (size_t)n;
+}
+
+int getValue()
+{
+    int n; 
+        if (!(cin>>n))
+    {
+        cout<<"error"<<endl;
+        abort();
+    }
+    return n;
 }
 
 int getNumber()
@@ -232,8 +246,7 @@ bool hasTwoPairsWithSameSign(const int arr[], const int n)
 {
     for (size_ti = 0; i < n - 3; ++i)
     {
-        if ((arr[i] > 0 && arr[i + 1] > 0 && arr[i + 2] > 0 && arr[i + 3] > 0) ||
-            (arr[i] < 0 && arr[i + 1] < 0 && arr[i + 2] < 0 && arr[i + 3] < 0))
+        if ((arr[i] * arr[i + 1] > 0 && arr[i + 2] *arr[i + 3] > 0))
         {
             return true;
         }
