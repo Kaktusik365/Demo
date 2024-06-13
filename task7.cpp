@@ -164,8 +164,8 @@ void insertFirstRowAfterMaxAbsColumn(int** arr3, int rows, int cols) {
                 maxAbsValue = i;
             }
         }
-        if (maxAbsValue != 0) {ь
-            int* tempRow = new int[cols]; // Создаем временный массив для хранения первой строки
+        if (maxAbsValue != 0) {
+            int* tempRow = new int[cols]; // Выделяем память для временного массива
             for (size_t l = 0; l < cols; ++l) {
                 tempRow[l] = arr3[0][l]; // Сохраняем первую строку во временный массив
             }
